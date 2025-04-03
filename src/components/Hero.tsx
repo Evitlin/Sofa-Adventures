@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Airplane } from 'lucide-react';
+import { Plane } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
@@ -29,7 +29,7 @@ const Hero: React.FC = () => {
           </p>
           <button className="btn-primary flex items-center justify-center gap-2 mx-auto animate-fade-in">
             <span>Start Exploring</span>
-            <Airplane size={20} />
+            <Plane size={20} />
           </button>
         </div>
       </div>
