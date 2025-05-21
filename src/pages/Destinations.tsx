@@ -95,18 +95,18 @@ const Destinations = () => {
               <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </div>
             
-            <div className="bg-white p-6 rounded-2xl shadow-md">
-              <div className="aspect-w-16 aspect-h-9 mb-6">
+           <div className="bg-white p-6 rounded-2xl shadow-md">
+              <div className="w-full h-[570px] overflow-hidden rounded-xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1672681887896-7984b2dce89c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                  src="/map.png" 
                   alt="World Map" 
-                  className="w-full h-full object-cover rounded-xl"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600  text-2xl text-center pt-4 mb-6">
                 Explore our interactive world map to discover virtual travel experiences from every corner of the globe. 
-                Click on a region to view available virtual tours and traveler comments.
+                Click on a region to view traveler comments.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

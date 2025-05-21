@@ -288,6 +288,7 @@ const NotificationsSection: React.FC = () => {
 
 const Profile: React.FC = () => {
   return (
+    <div style={{ paddingTop: '80px' }}>
     <div className="min-h-screen bg-sofa-beige/30">
       <Navigation />
       
@@ -349,6 +350,7 @@ const Profile: React.FC = () => {
       </section>
       
       <Footer />
+    </div>
     </div>
   );
 };
