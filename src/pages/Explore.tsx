@@ -176,6 +176,7 @@ const Explore: React.FC = () => {
   };
 
   return (
+    <div style={{ paddingTop: '80px' }}>
     <div className="min-h-screen bg-sofa-beige/30">
       <Navigation />
       
@@ -264,7 +265,7 @@ const Explore: React.FC = () => {
           )}
         </div>
       </section>
-      
+      </div>
       {/* Tour Details Modal */}
       <TourDetailsModal 
         isOpen={isModalOpen} 

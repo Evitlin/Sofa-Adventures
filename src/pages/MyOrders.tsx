@@ -211,7 +211,7 @@ const MyOrders: React.FC = () => {
     {
       id: "ORD-2025-1233",
       title: "Northern Lights Adventure",
-      image: "https://images.unsplash.com/photo-1579033385971-c5883b64ddb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      image: "https://souvenirs.vincent.voyage/wp-content/uploads/2024/11/NOR06893-Avec-accentuation-Bruit.jpg",
       date: "April 20, 2025",
       time: "8:00 PM (EST)",
       price: "$24.99",
@@ -261,6 +261,7 @@ const MyOrders: React.FC = () => {
   const cancelledOrders = allOrders.filter(order => order.status === 'cancelled');
 
   return (
+    <div style={{ paddingTop: '80px' }}>
     <div className="min-h-screen bg-sofa-beige/30">
       <Navigation />
       
@@ -385,6 +386,7 @@ const MyOrders: React.FC = () => {
       </section>
       
       <Footer />
+    </div>
     </div>
   );
 };
