@@ -40,11 +40,16 @@ const ExploreSection: React.FC = () => {
         </div>
         
         {/* Interactive Map */}
-        <div className="relative w-full max-w-4xl mx-auto h-[400px] md:h-[500px] bg-blue-50 rounded-xl mb-16 overflow-hidden">
+        <div className="relative w-full max-w-4xl mx-auto h-[350px] sm:h-[400px] md:h-[500px]">
           {/* World map graphic - changed to a real map */}
-          <div className="absolute inset-0 bg-contain bg-center bg-no-repeat"
-               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1672681887896-7984b2dce89c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')" }}>
-          </div>
+          <div
+  className="absolute inset-0 bg-cover bg-no-repeat z-0"
+  style={{
+    backgroundImage: "url('https://m.media-amazon.com/images/I/71kEbNSHGmL._AC_UF1000,1000_QL80_.jpg')",
+    backgroundPosition: 'center top 90%'// move image upward
+  }}
+/>
+
           
           {/* Clickable regions */}
           {regionData.map((region) => (
