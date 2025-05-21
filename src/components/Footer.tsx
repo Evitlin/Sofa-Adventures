@@ -2,6 +2,7 @@
 import React from 'react';
 import { Facebook, Twitter, Instagram, Youtube, Mail } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
@@ -34,11 +35,11 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a href="#home" className="text-white/70 hover:text-white transition-colors">Home</a></li>
-              <li><a href="#explore" className="text-white/70 hover:text-white transition-colors">Explore</a></li>
-              <li><a href="#destinations" className="text-white/70 hover:text-white transition-colors">Destinations</a></li>
-              <li><a href="#" className="text-white/70 hover:text-white transition-colors">Subscription Box</a></li>
-              <li><a href="#" className="text-white/70 hover:text-white transition-colors">Gift Cards</a></li>
+              <li><Link to="/" className="text-white/70 hover:text-white transition-colors">Home</Link></li>
+              <li><Link to="/explore" className="text-white/70 hover:text-white transition-colors">Explore</Link></li>
+              <li><Link to="/destinations" className="text-white/70 hover:text-white transition-colors">Destinations</Link></li>
+              <li><Link to="/my-orders" className="text-white/70 hover:text-white transition-colors">My Orders</Link></li>
+              <li><Link to="/profile" className="text-white/70 hover:text-white transition-colors">Profile</Link></li>
             </ul>
           </div>
           

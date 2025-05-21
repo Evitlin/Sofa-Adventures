@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Plane } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
   return (
@@ -30,10 +31,12 @@ const Hero: React.FC = () => {
             Experience immersive virtual journeys to breathtaking destinations 
             without leaving the comfort of your home.
           </p>
-          <button className="btn-primary flex items-center justify-center gap-2 mx-auto animate-fade-in">
-            <span>Start Exploring</span>
-            <Plane size={20} />
-          </button>
+          <Link to="/explore">
+            <button className="btn-primary flex items-center justify-center gap-2 mx-auto animate-fade-in">
+              <span>Start Exploring</span>
+              <Plane size={20} />
+            </button>
+          </Link>
         </div>
       </div>
       

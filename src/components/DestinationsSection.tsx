@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Star, Clock, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 type DestinationCardProps = {
   title: string;
@@ -115,9 +116,11 @@ const DestinationsSection: React.FC = () => {
         </div>
         
         <div className="text-center mt-12">
-          <button className="btn-secondary">
-            View All Experiences
-          </button>
+          <Link to="/explore">
+            <button className="btn-secondary">
+              View All Experiences
+            </button>
+          </Link>
         </div>
       </div>
     </section>
