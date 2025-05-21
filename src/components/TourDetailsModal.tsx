@@ -49,7 +49,6 @@ const TourDetailsModal: React.FC<TourDetailsModalProps> = ({ isOpen, onClose, to
           <div className="flex items-center justify-between">
             <DialogTitle className="text-xl font-bold text-sofa-purple">{tour.title}</DialogTitle>
             <Button variant="ghost" size="icon" onClick={onClose} className="h-8 w-8">
-              <X size={18} />
             </Button>
           </div>
           <DialogDescription className="flex items-center gap-2 text-sm">

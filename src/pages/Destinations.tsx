@@ -98,7 +98,7 @@ const Destinations = () => {
             <div className="bg-white p-6 rounded-2xl shadow-md">
               <div className="aspect-w-16 aspect-h-9 mb-6">
                 <img 
-                  src="https://images.unsplash.com/photo-1672681887896-7984b2dce89c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                  src=""
                   alt="World Map" 
                   className="w-full h-full object-cover rounded-xl"
                 />
