@@ -12,7 +12,12 @@ import MyOrders from "./pages/MyOrders";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
-@@ -16,12 +21,16 @@
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
