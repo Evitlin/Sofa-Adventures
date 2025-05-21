@@ -1,26 +1,81 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { MapPin, Search } from 'lucide-react';
+import { MapPin, Search, Globe } from 'lucide-react';
 import Comment from '@/components/Comment';
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Destinations = () => {
-  // Sample comments
-  const comments = [
+  // Region state
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+  
+  // Sample comments with region information
+  const allComments = [
     {
       id: '1',
       author: 'Adventure Seeker',
       content: 'The virtual tour of Kyoto was mind-blowing! The cherry blossoms looked so real I could almost smell them.',
-      date: '2 days ago'
+      date: '2 days ago',
+      region: 'Asia'
     },
     {
       id: '2',
       author: 'Couch Explorer',
       content: 'I did the Amazon rainforest tour last night. The sounds of the jungle were so immersive!',
-      date: '1 week ago'
+      date: '1 week ago',
+      region: 'South America'
+    },
+    {
+      id: '3',
+      author: 'Virtual Nomad',
+      content: 'The Tuscan wine country tour was spectacular! The guide shared so much history about each vineyard.',
+      date: '3 days ago',
+      region: 'Europe'
+    },
+    {
+      id: '4',
+      author: 'Digital Wanderer',
+      content: 'The Northern Lights experience from Iceland took my breath away. The aurora colors were magnificent!',
+      date: '5 days ago',
+      region: 'Europe'
+    },
+    {
+      id: '5',
+      author: 'Remote Traveler',
+      content: 'The Great Barrier Reef exploration was incredible. I felt like I was actually swimming with the fish!',
+      date: '1 day ago',
+      region: 'Oceania'
+    },
+    {
+      id: '6',
+      author: 'Stay-at-Home Explorer',
+      content: 'The safari through Serengeti National Park was a highlight of my month. The elephants were so close!',
+      date: '4 days ago',
+      region: 'Africa'
+    },
+    {
+      id: '7',
+      author: 'Virtual Voyager',
+      content: 'The Grand Canyon tour was breathtaking. The VR experience made me feel like I was standing on the edge!',
+      date: '2 weeks ago',
+      region: 'North America'
     }
   ];
+  
+  // Filter comments based on selected region
+  const filteredComments = selectedRegion 
+    ? allComments.filter(comment => comment.region === selectedRegion)
+    : allComments;
+    
+  // Handle region selection
+  const handleRegionSelect = (region: string) => {
+    if (selectedRegion === region) {
+      setSelectedRegion(null); // Deselect if clicking the same region
+    } else {
+      setSelectedRegion(region);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-sofa-beige flex flex-col">
@@ -51,18 +106,28 @@ const Destinations = () => {
               
               <p className="text-gray-600 mb-6">
                 Explore our interactive world map to discover virtual travel experiences from every corner of the globe. 
-                Click on a region to view available virtual tours.
+                Click on a region to view available virtual tours and traveler comments.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {['Europe', 'Asia', 'Africa', 'North America', 'South America', 'Oceania'].map((region) => (
-                  <div key={region} className="bg-sofa-beige/20 p-4 rounded-lg hover:bg-sofa-beige/40 transition-colors cursor-pointer">
+                  <div 
+                    key={region} 
+                    className={`${
+                      selectedRegion === region 
+                        ? 'bg-sofa-beige/80 border-2 border-sofa-orange' 
+                        : 'bg-sofa-beige/20 hover:bg-sofa-beige/40'
+                    } p-4 rounded-lg transition-colors cursor-pointer`}
+                    onClick={() => handleRegionSelect(region)}
+                  >
                     <div className="flex items-center">
-                      <MapPin size={20} className="text-sofa-red mr-2" />
+                      <MapPin size={20} className={`${selectedRegion === region ? 'text-sofa-orange' : 'text-sofa-red'} mr-2`} />
                       <h3 className="font-medium">{region}</h3>
                     </div>
                     <p className="text-sm text-gray-600 mt-2">
-                      Discover virtual tours in {region}
+                      {selectedRegion === region 
+                        ? `Showing traveler comments from ${region}` 
+                        : `Discover virtual tours in ${region}`}
                     </p>
                   </div>
                 ))}
@@ -71,18 +136,40 @@ const Destinations = () => {
           </section>
           
           <section className="mt-12">
-            <h2 className="text-2xl font-bold mb-6">Traveler Comments</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold">
+                {selectedRegion 
+                  ? `Traveler Comments: ${selectedRegion}` 
+                  : 'Traveler Comments: All Regions'}
+              </h2>
+              {selectedRegion && (
+                <button 
+                  onClick={() => setSelectedRegion(null)}
+                  className="flex items-center text-sm text-sofa-purple hover:text-sofa-orange transition-colors"
+                >
+                  <Globe size={16} className="mr-1" />
+                  Show All Regions
+                </button>
+              )}
+            </div>
             
             <div className="bg-white/50 p-6 rounded-2xl">
-              {comments.map(comment => (
-                <Comment 
-                  key={comment.id}
-                  id={comment.id}
-                  author={comment.author}
-                  content={comment.content}
-                  date={comment.date}
-                />
-              ))}
+              {filteredComments.length > 0 ? (
+                filteredComments.map(comment => (
+                  <Comment 
+                    key={comment.id}
+                    id={comment.id}
+                    author={comment.author}
+                    content={comment.content}
+                    date={comment.date}
+                  />
+                ))
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-500">No comments found for this region yet.</p>
+                  <p className="text-sm text-gray-400 mt-2">Be the first to share your experience!</p>
+                </div>
+              )}
               
               <div className="mt-6">
                 <textarea
