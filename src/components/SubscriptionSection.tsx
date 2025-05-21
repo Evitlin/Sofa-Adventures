@@ -8,11 +8,12 @@ const SubscriptionSection: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="grid md:grid-cols-2">
-            {/* Image side - replaced with loot box/chest image */}
+            {/* Image side - replaced with treasure chest image */}
             <div className="relative h-64 md:h-auto">
               <img 
-                src="https://images.unsplash.com/photo-1608085575984-d61d8335340e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                alt="Adventure loot box" 
+                //src="https://images.unsplash.com/photo-1608085575984-d61d8335340e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                src='https://i0.wp.com/appstle.com/wp-content/uploads/2023/06/Complete-Guide-to-Mystery-Boxes-in-the-Ecommerce-Subscription-Industry.png?fit=2260%2C1330&ssl=1'
+                alt="Adventure treasure chest" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-sofa-purple/60 to-transparent flex items-center justify-center md:justify-start p-8">

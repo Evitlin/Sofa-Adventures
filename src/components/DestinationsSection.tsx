@@ -72,7 +72,7 @@ const DestinationsSection: React.FC = () => {
     },
     {
       title: "Northern Lights Adventure",
-      image: "https://images.unsplash.com/photo-1579033385971-c5883b64ddb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      image: "https://souvenirs.vincent.voyage/wp-content/uploads/2024/11/NOR06893-Avec-accentuation-Bruit.jpg",
       description: "Marvel at the aurora borealis from Iceland's remote locations with expert guide commentary.",
       rating: 4.9,
       duration: "75 minutes",

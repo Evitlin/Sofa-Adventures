@@ -93,7 +93,7 @@ const Explore: React.FC = () => {
     },
     {
       title: "Northern Lights Adventure",
-      image: "https://images.unsplash.com/photo-1579033385971-c5883b64ddb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+      image: "https://souvenirs.vincent.voyage/wp-content/uploads/2024/11/NOR06893-Avec-accentuation-Bruit.jpg",
       description: "Marvel at the aurora borealis from Iceland's remote locations with expert guide commentary.",
       longDescription: "Witness the magical dancing lights of the Aurora Borealis without braving the cold. This virtual tour takes you to remote locations in Iceland where the northern lights shine brightest. Our expert guide, an astrophysicist, explains the science behind this natural phenomenon while sharing stunning footage captured under optimal conditions. The tour includes visits to Iceland's famous black sand beaches, volcanic landscapes, and glacial lagoons under the mesmerizing glow of the aurora.",
       rating: 4.9,

@@ -57,11 +57,12 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white bg-opacity-95 shadow-sm z-50 py-4">
+    <nav className="fixed top-0 left-0 w-full bg-white bg-opacity-100 shadow-sm z-50 py-0">
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <div className="flex items-center">
-          <Link to="/" className="text-sofa-purple text-2xl font-bold font-display">Sofa Adventures</Link>
-        </div>
+        <div className="flex items-center space-x-2">
+      <img src="/SOFA_ADVENTURES2.gif" alt="Sofa Logo" className="h-[105px] w-[105px] object-contain" />
+       <Link to="/" className="text-sofa-purple text-2xl font-bold font-display">Sofa Adventures</Link>
+      </div>
 
         {/* Mobile menu button */}
         <Button 
@@ -74,7 +75,7 @@ const Navigation: React.FC = () => {
         </Button>
 
         {/* Desktop navigation */}
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center space-x-6 text-lg">
           <Link to="/" className="nav-link">
             <Home size={18} />
             <span>Home</span>
@@ -102,7 +103,7 @@ const Navigation: React.FC = () => {
               </Link>
               <Button 
                 variant="ghost" 
-                className="nav-link flex items-center gap-2"
+                className="nav-link flex items-center gap-2 text-lg"
                 onClick={handleLogout}
               >
                 <LogOut size={18} />
@@ -112,20 +113,13 @@ const Navigation: React.FC = () => {
           ) : (
             <Button 
               variant="ghost" 
-              className="nav-link flex items-center gap-2"
+              className="nav-link flex items-center gap-2 text-lg"
               onClick={handleLogin}
             >
               <LogIn size={18} />
               <span>Log In</span>
             </Button>
           )}
-        </div>
-
-        {/* Search button */}
-        <div className="hidden md:block">
-          <Button variant="ghost" size="icon">
-            <Search size={20} />
-          </Button>
         </div>
       </div>
 
