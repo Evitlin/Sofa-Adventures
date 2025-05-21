@@ -18,11 +18,11 @@ const ExploreSection: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <section id="explore" className="py-20 bg-white">
+    <section id="explore" className="py-20 bg-[#E8D5B5]">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Explore Our Virtual Destinations</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-700 max-w-2xl mx-auto">
             Click on different regions of our interactive map or use the search to find your next virtual adventure.
           </p>
           
@@ -41,9 +41,9 @@ const ExploreSection: React.FC = () => {
         
         {/* Interactive Map */}
         <div className="relative w-full max-w-4xl mx-auto h-[400px] md:h-[500px] bg-blue-50 rounded-xl mb-16 overflow-hidden">
-          {/* World map graphic */}
-          <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-80"
-               style={{ backgroundImage: "url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/World_map_2004_CIA_large_2m.jpg/1920px-World_map_2004_CIA_large_2m.jpg')" }}>
+          {/* World map graphic - changed to a better map */}
+          <div className="absolute inset-0 bg-contain bg-center bg-no-repeat"
+               style={{ backgroundImage: "url('https://images.unsplash.com/photo-1672681887896-7984b2dce89c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')" }}>
           </div>
           
           {/* Clickable regions */}
