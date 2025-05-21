@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Search, Globe, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 const regionData = [
   { id: 'europe', name: 'Europe', top: '25%', left: '48%' },
@@ -71,9 +72,11 @@ const ExploreSection: React.FC = () => {
               <p className="text-sm text-gray-600 mb-3">
                 Explore virtual tours from this region and experience its culture from the comfort of your home.
               </p>
-              <button className="btn-secondary text-sm py-2 px-4 w-full">
-                View Tours
-              </button>
+              <Link to="/destinations">
+                <button className="btn-secondary text-sm py-2 px-4 w-full">
+                  View Tours
+                </button>
+              </Link>
             </div>
           )}
           
@@ -84,9 +87,11 @@ const ExploreSection: React.FC = () => {
         </div>
         
         <div className="text-center">
-          <button className="btn-primary">
-            Browse All Destinations
-          </button>
+          <Link to="/destinations">
+            <button className="btn-primary">
+              Browse All Destinations
+            </button>
+          </Link>
         </div>
       </div>
     </section>
