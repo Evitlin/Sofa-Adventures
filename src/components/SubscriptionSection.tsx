@@ -8,17 +8,17 @@ const SubscriptionSection: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="grid md:grid-cols-2">
-            {/* Image side */}
+            {/* Image side - replaced with loot box/chest image */}
             <div className="relative h-64 md:h-auto">
               <img 
-                src="https://images.unsplash.com/photo-1469041797191-50ace28483c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                alt="Monthly subscription box" 
+                src="https://images.unsplash.com/photo-1608085575984-d61d8335340e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                alt="Adventure loot box" 
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-sofa-purple/60 to-transparent flex items-center justify-center md:justify-start p-8">
                 <div className="text-white text-center md:text-left">
                   <h3 className="text-2xl md:text-3xl font-bold mb-2">Adventure Box</h3>
-                  <p className="text-white/80">Monthly travel themes delivered to your door</p>
+                  <p className="text-white/80">Monthly travel treasures delivered to your door</p>
                 </div>
               </div>
             </div>
@@ -31,7 +31,7 @@ const SubscriptionSection: React.FC = () => {
               </div>
               
               <p className="text-gray-600 mb-6">
-                Enhance your virtual travel experience with our monthly box filled with treats, crafts, and souvenirs from each featured destination.
+                Enhance your virtual travel experience with our monthly box filled with treats, crafts, souvenirs, local food, candles, and authentic items from each featured destination.
               </p>
               
               <div className="mb-8">

@@ -1,13 +1,31 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Home, Map, User, Search, MapPin, Menu, X, LogIn, LogOut, ShoppingBag } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Temporary state for demo purposes
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userAvatar, setUserAvatar] = useState<string>('');
+
+  // Load login state and avatar from localStorage on component mount
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedInStatus);
+    
+    // Get saved avatar or generate a new one if none exists
+    const savedAvatar = localStorage.getItem('userAvatar');
+    if (savedAvatar) {
+      setUserAvatar(savedAvatar);
+    } else {
+      const newAvatar = getRandomAvatar();
+      setUserAvatar(newAvatar);
+      localStorage.setItem('userAvatar', newAvatar);
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -15,10 +33,27 @@ const Navigation: React.FC = () => {
 
   const handleLogin = () => {
     setIsLoggedIn(true);
+    localStorage.setItem('isLoggedIn', 'true');
+    
+    // Create a new avatar if none exists
+    if (!userAvatar) {
+      const newAvatar = getRandomAvatar();
+      setUserAvatar(newAvatar);
+      localStorage.setItem('userAvatar', newAvatar);
+    }
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    localStorage.setItem('isLoggedIn', 'false');
+    // We don't clear the avatar on logout so it persists between sessions
+  };
+
+  // Generate a random avatar for the user
+  const getRandomAvatar = () => {
+    const styles = ['adventurer', 'adventurer-neutral', 'avataaars', 'big-ears', 'bottts', 'fun-emoji'];
+    const selectedStyle = styles[Math.floor(Math.random() * styles.length)];
+    return `https://api.dicebear.com/7.x/${selectedStyle}/svg?seed=${Math.random().toString(36).substring(7)}`;
   };
 
   return (
@@ -59,7 +94,10 @@ const Navigation: React.FC = () => {
                 <span>My Orders</span>
               </Link>
               <Link to="/profile" className="nav-link">
-                <User size={18} />
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={userAvatar} alt="User" />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
                 <span>Profile</span>
               </Link>
               <Button 
@@ -119,8 +157,13 @@ const Navigation: React.FC = () => {
                 <span>My Orders</span>
               </Link>
               <Link to="/profile" className="nav-link text-xl" onClick={toggleMenu}>
-                <User size={20} />
-                <span>Profile</span>
+                <div className="flex items-center gap-2">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={userAvatar} alt="User" />
+                    <AvatarFallback>U</AvatarFallback>
+                  </Avatar>
+                  <span>Profile</span>
+                </div>
               </Link>
               <Button 
                 variant="ghost" 
