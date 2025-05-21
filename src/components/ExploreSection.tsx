@@ -41,7 +41,7 @@ const ExploreSection: React.FC = () => {
         
         {/* Interactive Map */}
         <div className="relative w-full max-w-4xl mx-auto h-[400px] md:h-[500px] bg-blue-50 rounded-xl mb-16 overflow-hidden">
-          {/* World map graphic - changed to a better map */}
+          {/* World map graphic - changed to a real map */}
           <div className="absolute inset-0 bg-contain bg-center bg-no-repeat"
                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1672681887896-7984b2dce89c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')" }}>
           </div>
@@ -72,7 +72,7 @@ const ExploreSection: React.FC = () => {
               <p className="text-sm text-gray-600 mb-3">
                 Explore virtual tours from this region and experience its culture from the comfort of your home.
               </p>
-              <Link to="/destinations">
+              <Link to="/explore">
                 <button className="btn-secondary text-sm py-2 px-4 w-full">
                   View Tours
                 </button>

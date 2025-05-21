@@ -9,11 +9,22 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userAvatar, setUserAvatar] = useState<string>('');
 
-  // Load login state from localStorage on component mount
+  // Load login state and avatar from localStorage on component mount
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn') === 'true';
     setIsLoggedIn(loggedInStatus);
+    
+    // Get saved avatar or generate a new one if none exists
+    const savedAvatar = localStorage.getItem('userAvatar');
+    if (savedAvatar) {
+      setUserAvatar(savedAvatar);
+    } else {
+      const newAvatar = getRandomAvatar();
+      setUserAvatar(newAvatar);
+      localStorage.setItem('userAvatar', newAvatar);
+    }
   }, []);
 
   const toggleMenu = () => {
@@ -23,11 +34,19 @@ const Navigation: React.FC = () => {
   const handleLogin = () => {
     setIsLoggedIn(true);
     localStorage.setItem('isLoggedIn', 'true');
+    
+    // Create a new avatar if none exists
+    if (!userAvatar) {
+      const newAvatar = getRandomAvatar();
+      setUserAvatar(newAvatar);
+      localStorage.setItem('userAvatar', newAvatar);
+    }
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.setItem('isLoggedIn', 'false');
+    // We don't clear the avatar on logout so it persists between sessions
   };
 
   // Generate a random avatar for the user
@@ -76,7 +95,7 @@ const Navigation: React.FC = () => {
               </Link>
               <Link to="/profile" className="nav-link">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={getRandomAvatar()} alt="User" />
+                  <AvatarImage src={userAvatar} alt="User" />
                   <AvatarFallback>U</AvatarFallback>
                 </Avatar>
                 <span>Profile</span>
@@ -140,7 +159,7 @@ const Navigation: React.FC = () => {
               <Link to="/profile" className="nav-link text-xl" onClick={toggleMenu}>
                 <div className="flex items-center gap-2">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={getRandomAvatar()} alt="User" />
+                    <AvatarImage src={userAvatar} alt="User" />
                     <AvatarFallback>U</AvatarFallback>
                   </Avatar>
                   <span>Profile</span>

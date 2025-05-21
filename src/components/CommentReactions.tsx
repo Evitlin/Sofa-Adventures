@@ -1,12 +1,13 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Star, Heart, Smile, ThumbsUp, Gift, Award, Rocket, Zap } from 'lucide-react';
 
-type Emoji = '👽' | '❤' | '😊' | '👍' | '🎁' | '🤠' | '💯' | '🧢';
+type EmojiType = '👽' | '❤' | '😊' | '👍' | '🎁' | '🤠' | '💯' | '🧢';
 
 interface Reaction {
-  emoji: Emoji;
+  emoji: EmojiType;
+  icon: React.ReactNode;
   count: number;
   reacted: boolean;
 }
@@ -17,14 +18,14 @@ interface CommentReactionsProps {
 
 const CommentReactions: React.FC<CommentReactionsProps> = ({ commentId }) => {
   const [reactions, setReactions] = useState<Reaction[]>([
-    { emoji: '👽', count: 0, reacted: false },
-    { emoji: '❤', count: 0, reacted: false },
-    { emoji: '😊', count: 0, reacted: false },
-    { emoji: '👍', count: 0, reacted: false },
-    { emoji: '🎁', count: 0, reacted: false },
-    { emoji: '🤠', count: 0, reacted: false },
-    { emoji: '💯', count: 0, reacted: false },
-    { emoji: '🧢', count: 0, reacted: false },
+    { emoji: '👽', icon: <Star size={18} />, count: 0, reacted: false },
+    { emoji: '❤', icon: <Heart size={18} />, count: 0, reacted: false },
+    { emoji: '😊', icon: <Smile size={18} />, count: 0, reacted: false },
+    { emoji: '👍', icon: <ThumbsUp size={18} />, count: 0, reacted: false },
+    { emoji: '🎁', icon: <Gift size={18} />, count: 0, reacted: false },
+    { emoji: '🤠', icon: <Rocket size={18} />, count: 0, reacted: false },
+    { emoji: '💯', icon: <Award size={18} />, count: 0, reacted: false },
+    { emoji: '🧢', icon: <Zap size={18} />, count: 0, reacted: false },
   ]);
 
   const toggleReaction = (index: number) => {
@@ -54,7 +55,7 @@ const CommentReactions: React.FC<CommentReactionsProps> = ({ commentId }) => {
                 className={`px-2 py-1 h-auto ${reaction.reacted ? 'bg-gray-100' : ''}`}
                 onClick={() => toggleReaction(index)}
               >
-                <span className="text-lg mr-1">{reaction.emoji}</span>
+                <span className="text-lg mr-1">{reaction.icon}</span>
                 {reaction.count > 0 && <span className="text-xs">{reaction.count}</span>}
               </Button>
             </TooltipTrigger>

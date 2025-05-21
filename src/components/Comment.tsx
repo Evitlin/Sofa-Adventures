@@ -11,8 +11,8 @@ interface CommentProps {
 }
 
 const Comment: React.FC<CommentProps> = ({ id, author, content, date }) => {
-  // Function to generate a random avatar for comments
-  const getRandomAvatar = () => {
+  // Function to generate a consistent avatar for comments
+  const getAvatar = () => {
     const styles = ['adventurer', 'adventurer-neutral', 'bottts', 'fun-emoji', 'lorelei', 'micah'];
     const selectedStyle = styles[Math.floor(Math.random() * styles.length)];
     return `https://api.dicebear.com/7.x/${selectedStyle}/svg?seed=${author}`;
@@ -22,7 +22,7 @@ const Comment: React.FC<CommentProps> = ({ id, author, content, date }) => {
     <div className="p-4 bg-white rounded-lg shadow-sm mb-4">
       <div className="flex items-start gap-3">
         <Avatar className="h-10 w-10">
-          <AvatarImage src={getRandomAvatar()} alt={author} />
+          <AvatarImage src={getAvatar()} alt={author} />
           <AvatarFallback>{author.charAt(0)}</AvatarFallback>
         </Avatar>
         

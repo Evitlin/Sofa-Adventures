@@ -5,8 +5,9 @@ import Footer from '@/components/Footer';
 import { Search, Filter, Globe, MapPin, Star, Clock, Users, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import TourDetailsModal from '@/components/TourDetailsModal';
 
-type ExperienceCardProps = {
+type ExperienceType = {
   title: string;
   image: string;
   description: string;
@@ -14,6 +15,14 @@ type ExperienceCardProps = {
   price: string;
   duration: string;
   category: string;
+  longDescription?: string;
+  dates?: string;
+  groupSize?: string;
+  language?: string;
+};
+
+type ExperienceCardProps = ExperienceType & {
+  onClick: () => void;
 };
 
 const ExperienceCard: React.FC<ExperienceCardProps> = ({
@@ -24,6 +33,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
   price,
   duration,
   category,
+  onClick
 }) => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
@@ -49,7 +59,11 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
         
         <div className="flex items-center justify-between">
           <span className="text-sofa-purple font-bold">{price}</span>
-          <Button variant="outline" className="text-sofa-orange border-sofa-orange hover:bg-sofa-orange/10">
+          <Button 
+            variant="outline" 
+            className="text-sofa-orange border-sofa-orange hover:bg-sofa-orange/10"
+            onClick={onClick}
+          >
             View Details
           </Button>
         </div>
@@ -60,25 +74,35 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
 
 const Explore: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [selectedTour, setSelectedTour] = useState<ExperienceType | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
-  const experiences = [
+  const experiences: ExperienceType[] = [
     {
       title: "Japanese Cherry Blossoms",
       image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       description: "Experience Japan's magical cherry blossom season virtually. Includes temple visits and cultural insights.",
+      longDescription: "Immerse yourself in Japan's breathtaking cherry blossom season from your living room. This virtual tour takes you through Tokyo's Ueno Park, Kyoto's Philosopher's Path, and the historic Himeji Castle, all adorned with sakura blossoms. Learn about hanami (flower viewing) traditions, Japanese customs, and the cultural significance of sakura. Our expert guide will share fascinating stories and historical facts throughout this serene journey.",
       rating: 4.8,
       price: "$19.99",
       duration: "90 minutes",
       category: "Cultural",
+      dates: "February - April",
+      groupSize: "Unlimited",
+      language: "English, Japanese subtitles"
     },
     {
       title: "Northern Lights Adventure",
       image: "https://images.unsplash.com/photo-1579033385971-c5883b64ddb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
       description: "Marvel at the aurora borealis from Iceland's remote locations with expert guide commentary.",
+      longDescription: "Witness the magical dancing lights of the Aurora Borealis without braving the cold. This virtual tour takes you to remote locations in Iceland where the northern lights shine brightest. Our expert guide, an astrophysicist, explains the science behind this natural phenomenon while sharing stunning footage captured under optimal conditions. The tour includes visits to Iceland's famous black sand beaches, volcanic landscapes, and glacial lagoons under the mesmerizing glow of the aurora.",
       rating: 4.9,
       price: "$24.99",
       duration: "75 minutes",
       category: "Nature",
+      dates: "Year-round",
+      groupSize: "Unlimited",
+      language: "English"
     },
     {
       title: "Moroccan Market Tour",
@@ -142,6 +166,15 @@ const Explore: React.FC = () => {
     ? experiences 
     : experiences.filter(exp => exp.category.toLowerCase() === activeFilter);
 
+  const handleOpenTourDetails = (tour: ExperienceType) => {
+    setSelectedTour(tour);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseTourDetails = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-sofa-beige/30">
       <Navigation />
@@ -200,7 +233,11 @@ const Explore: React.FC = () => {
           {/* Experiences grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredExperiences.map((experience, index) => (
-              <ExperienceCard key={index} {...experience} />
+              <ExperienceCard 
+                key={index} 
+                {...experience} 
+                onClick={() => handleOpenTourDetails(experience)}
+              />
             ))}
           </div>
           
@@ -227,6 +264,13 @@ const Explore: React.FC = () => {
           )}
         </div>
       </section>
+      
+      {/* Tour Details Modal */}
+      <TourDetailsModal 
+        isOpen={isModalOpen} 
+        onClose={handleCloseTourDetails} 
+        tour={selectedTour} 
+      />
       
       <Footer />
     </div>
