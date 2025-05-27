@@ -206,7 +206,7 @@ const MyOrders: React.FC = () => {
         last4: "4242",
         status: 'paid'
       },
-      accessLink: "https://example.com/join"
+      accessLink: "https://www.360are.com/tour/panorama/0593dd59c4/"
     },
     {
       id: "ORD-2025-1233",
