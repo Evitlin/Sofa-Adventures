@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -8,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { useToast } from "@/hooks/use-toast";
 
 type Order = {
   id: string;
@@ -27,7 +28,7 @@ type Order = {
   rated?: boolean;
 };
 
-const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
+const OrderItem: React.FC<{ order: Order; onCancel: (orderId: string) => void }> = ({ order, onCancel }) => {
   const [showDetails, setShowDetails] = useState(false);
   
   const getStatusColor = (status: string) => {
@@ -47,6 +48,11 @@ const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
       default:
         return 'bg-gray-100 text-gray-700';
     }
+  };
+
+  const handleCancel = () => {
+    console.log('Cancelling order:', order.id);
+    onCancel(order.id);
   };
 
   return (
@@ -83,7 +89,31 @@ const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
                     </Button>
                   )}
                   
-                  {order.accessLink && (
+                  {order.status !== 'completed' && order.status !== 'cancelled' && (
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive" size="sm">
+                          Cancel Tour
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Cancel Virtual Tour</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Are you sure you want to cancel "{order.title}"? This action cannot be undone and you will receive a refund according to our cancellation policy.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Keep Tour</AlertDialogCancel>
+                          <AlertDialogAction onClick={handleCancel} className="bg-red-600 hover:bg-red-700">
+                            Cancel Tour
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  )}
+                  
+                  {order.accessLink && order.status === 'upcoming' && (
                   <a href={order.accessLink} target="_blank" rel="noopener noreferrer">
                     <Button size="sm" className="bg-sofa-orange hover:bg-sofa-orange/90">
                       <ExternalLink size={16} className="mr-1" />
@@ -193,8 +223,9 @@ const ArrowDown = (props: any) => (
 
 const MyOrders: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const { toast } = useToast();
   
-  const allOrders: Order[] = [
+  const [orders, setOrders] = useState<Order[]>([
     {
       id: "ORD-2025-1234",
       title: "Japanese Cherry Blossoms",
@@ -256,11 +287,32 @@ const MyOrders: React.FC = () => {
         status: 'refunded'
       }
     }
-  ];
+  ]);
+
+  const handleCancelOrder = (orderId: string) => {
+    console.log('Processing cancellation for order:', orderId);
+    
+    setOrders(prevOrders => 
+      prevOrders.map(order => 
+        order.id === orderId 
+          ? { 
+              ...order, 
+              status: 'cancelled' as const,
+              payment: { ...order.payment, status: 'refunded' as const }
+            }
+          : order
+      )
+    );
+
+    toast({
+      title: "Tour Cancelled Successfully",
+      description: "Your virtual tour has been cancelled and a refund has been processed.",
+    });
+  };
   
-  const upcomingOrders = allOrders.filter(order => order.status === 'upcoming');
-  const completedOrders = allOrders.filter(order => order.status === 'completed');
-  const cancelledOrders = allOrders.filter(order => order.status === 'cancelled');
+  const upcomingOrders = orders.filter(order => order.status === 'upcoming');
+  const completedOrders = orders.filter(order => order.status === 'completed');
+  const cancelledOrders = orders.filter(order => order.status === 'cancelled');
 
   return (
     <div style={{ paddingTop: '80px' }}>
@@ -298,7 +350,7 @@ const MyOrders: React.FC = () => {
             <Tabs defaultValue="all" className="space-y-6">
               <TabsList className="grid grid-cols-4 w-full">
                 <TabsTrigger value="all">
-                  All Orders ({allOrders.length})
+                  All Orders ({orders.length})
                 </TabsTrigger>
                 <TabsTrigger value="upcoming">
                   Upcoming ({upcomingOrders.length})
@@ -312,15 +364,15 @@ const MyOrders: React.FC = () => {
               </TabsList>
               
               <TabsContent value="all" className="space-y-4">
-                {allOrders.map((order) => (
-                  <OrderItem key={order.id} order={order} />
+                {orders.map((order) => (
+                  <OrderItem key={order.id} order={order} onCancel={handleCancelOrder} />
                 ))}
               </TabsContent>
               
               <TabsContent value="upcoming" className="space-y-4">
                 {upcomingOrders.length > 0 ? (
                   upcomingOrders.map((order) => (
-                    <OrderItem key={order.id} order={order} />
+                    <OrderItem key={order.id} order={order} onCancel={handleCancelOrder} />
                   ))
                 ) : (
                   <div className="text-center py-10">
@@ -335,7 +387,7 @@ const MyOrders: React.FC = () => {
               <TabsContent value="completed" className="space-y-4">
                 {completedOrders.length > 0 ? (
                   completedOrders.map((order) => (
-                    <OrderItem key={order.id} order={order} />
+                    <OrderItem key={order.id} order={order} onCancel={handleCancelOrder} />
                   ))
                 ) : (
                   <div className="text-center py-10">
@@ -347,7 +399,7 @@ const MyOrders: React.FC = () => {
               <TabsContent value="cancelled" className="space-y-4">
                 {cancelledOrders.length > 0 ? (
                   cancelledOrders.map((order) => (
-                    <OrderItem key={order.id} order={order} />
+                    <OrderItem key={order.id} order={order} onCancel={handleCancelOrder} />
                   ))
                 ) : (
                   <div className="text-center py-10">
@@ -358,7 +410,7 @@ const MyOrders: React.FC = () => {
             </Tabs>
             
             {/* Pagination */}
-            {allOrders.length > 0 && (
+            {orders.length > 0 && (
               <div className="flex items-center justify-between mt-8">
                 <Button 
                   variant="outline" 
