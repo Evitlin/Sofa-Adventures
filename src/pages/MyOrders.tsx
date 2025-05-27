@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -63,6 +64,9 @@ const OrderItem: React.FC<{ order: Order; onCancel: (orderId: string) => void; o
     onPayment(order.id);
   };
 
+  // Only allow cancellation for unpaid orders or orders with pending payment status
+  const canCancel = order.status === 'unpaid' || order.payment.status === 'pending';
+
   return (
     <Card className="mb-4">
       <CardContent className="p-0">
@@ -108,7 +112,7 @@ const OrderItem: React.FC<{ order: Order; onCancel: (orderId: string) => void; o
                     </Button>
                   )}
                   
-                  {order.status !== 'completed' && order.status !== 'cancelled' && order.status !== 'unpaid' && (
+                  {canCancel && (
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button variant="destructive" size="sm">
@@ -252,6 +256,20 @@ const MyOrders: React.FC = () => {
     const loadOrders = () => {
       const storedOrders = JSON.parse(localStorage.getItem('userOrders') || '[]');
       const defaultOrders = [
+        {
+          id: "ORD-2025-1235",
+          title: "Swiss Alpine Adventure",
+          image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          date: "May 15, 2025",
+          time: "3:00 PM (EST)",
+          price: "$22.99",
+          status: 'unpaid' as const,
+          payment: {
+            method: "Pending",
+            last4: "----",
+            status: 'pending' as const
+          }
+        },
         {
           id: "ORD-2025-1234",
           title: "Japanese Cherry Blossoms",
