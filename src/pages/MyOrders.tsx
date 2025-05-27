@@ -84,11 +84,13 @@ const OrderItem: React.FC<{ order: Order }> = ({ order }) => {
                   )}
                   
                   {order.accessLink && (
+                  <a href={order.accessLink} target="_blank" rel="noopener noreferrer">
                     <Button size="sm" className="bg-sofa-orange hover:bg-sofa-orange/90">
                       <ExternalLink size={16} className="mr-1" />
                       Join Experience
                     </Button>
-                  )}
+                  </a>
+                )}
                   
                   <Button 
                     variant="ghost" 
