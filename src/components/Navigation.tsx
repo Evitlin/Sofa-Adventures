@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { Home, Map, User, Search, MapPin, Menu, X, LogIn, LogOut, ShoppingBag } from 'lucide-react';
+import { Home, Map, User, Search, MapPin, Menu, X, LogIn, LogOut, ShoppingBag, UserPlus } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -111,14 +110,20 @@ const Navigation: React.FC = () => {
           </Button>
         </>
       ) : (
-        <Button
-          variant="ghost"
-          className="nav-link flex items-center gap-2 text-lg"
-          onClick={handleLogin}
-        >
-          <LogIn size={18} />
-          <span>Log In</span>
-        </Button>
+        <>
+          <Button
+            variant="ghost"
+            className="nav-link flex items-center gap-2 text-lg"
+            onClick={handleLogin}
+          >
+            <LogIn size={18} />
+            <span>Log In</span>
+          </Button>
+          <Link to="/signup" className="nav-link">
+            <UserPlus size={18} />
+            <span>Sign Up</span>
+          </Link>
+        </>
       )}
     </div>
   </div>
@@ -172,17 +177,23 @@ const Navigation: React.FC = () => {
           </Button>
         </>
       ) : (
-        <Button
-          variant="ghost"
-          className="nav-link text-xl justify-start"
-          onClick={() => {
-            handleLogin();
-            toggleMenu();
-          }}
-        >
-          <LogIn size={20} />
-          <span>Log In</span>
-        </Button>
+        <>
+          <Button
+            variant="ghost"
+            className="nav-link text-xl justify-start"
+            onClick={() => {
+              handleLogin();
+              toggleMenu();
+            }}
+          >
+            <LogIn size={20} />
+            <span>Log In</span>
+          </Button>
+          <Link to="/signup" className="nav-link text-xl" onClick={toggleMenu}>
+            <UserPlus size={20} />
+            <span>Sign Up</span>
+          </Link>
+        </>
       )}
 
       <div className="pt-4">

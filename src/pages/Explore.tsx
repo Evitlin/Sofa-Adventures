@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -60,9 +59,9 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({
         <div className="flex items-center justify-between">
           <span className="text-sofa-purple font-bold">{price}</span>
           <Button 
-            variant="outline" 
-            className="text-sofa-orange border-sofa-orange hover:bg-sofa-orange/10"
+            className="bg-sofa-orange hover:bg-sofa-orange/90"
             onClick={onClick}
+            size="sm"
           >
             View Details
           </Button>

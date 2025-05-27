@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Star, Clock, Calendar, Users, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import Comment from './Comment';
+import { useToast } from "@/hooks/use-toast";
 
 interface TourDetailsModalProps {
   isOpen: boolean;
@@ -24,7 +24,45 @@ interface TourDetailsModalProps {
 }
 
 const TourDetailsModal: React.FC<TourDetailsModalProps> = ({ isOpen, onClose, tour }) => {
+  const { toast } = useToast();
+
   if (!tour) return null;
+
+  const handleBookExperience = () => {
+    // Generate a unique order ID
+    const orderId = `ORD-2025-${Math.random().toString(36).substr(2, 4).toUpperCase()}`;
+    
+    // Create new order object
+    const newOrder = {
+      id: orderId,
+      title: tour.title,
+      image: tour.image,
+      date: "TBD", // To be determined after payment
+      time: "TBD",
+      price: tour.price,
+      status: 'unpaid' as const,
+      payment: {
+        method: "Not set",
+        last4: "",
+        status: 'pending' as const
+      }
+    };
+
+    // Get existing orders from localStorage
+    const existingOrders = JSON.parse(localStorage.getItem('userOrders') || '[]');
+    
+    // Add new order
+    const updatedOrders = [newOrder, ...existingOrders];
+    localStorage.setItem('userOrders', JSON.stringify(updatedOrders));
+
+    toast({
+      title: "Experience Booked!",
+      description: `${tour.title} has been added to your orders. Please complete payment to confirm your booking.`,
+    });
+
+    // Close the modal after booking
+    onClose();
+  };
 
   // Sample comments for the tour
   const comments = [
@@ -95,7 +133,9 @@ const TourDetailsModal: React.FC<TourDetailsModalProps> = ({ isOpen, onClose, to
               <span className="text-sm text-gray-500">Price</span>
               <p className="text-xl font-bold text-sofa-purple">{tour.price}</p>
             </div>
-            <Button className="btn-primary">Book This Experience</Button>
+            <Button className="btn-primary" onClick={handleBookExperience}>
+              Book This Experience
+            </Button>
           </div>
           
           <div className="border-t pt-6">
