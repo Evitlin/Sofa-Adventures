@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { User, CreditCard, Mail, Lock, Phone, MapPin, Bell, ChevronRight, Save } from 'lucide-react';
@@ -9,17 +8,31 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const ProfileSection: React.FC = () => {
   const [formState, setFormState] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    phone: "+1 (555) 123-4567"
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: ""
   });
 
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Load user profile from localStorage
+    const userProfile = localStorage.getItem('userProfile');
+    if (userProfile) {
+      const profile = JSON.parse(userProfile);
+      setFormState({
+        firstName: profile.firstName || "",
+        lastName: profile.lastName || "",
+        email: profile.email || "",
+        phone: profile.phoneNumber || ""
+      });
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -28,6 +41,18 @@ const ProfileSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Update localStorage with new profile data
+    const currentProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
+    const updatedProfile = {
+      ...currentProfile,
+      firstName: formState.firstName,
+      lastName: formState.lastName,
+      email: formState.email,
+      phoneNumber: formState.phone
+    };
+    localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
+    
     toast({
       title: "Profile Updated",
       description: "Your profile information has been successfully updated.",
@@ -287,6 +312,35 @@ const NotificationsSection: React.FC = () => {
 };
 
 const Profile: React.FC = () => {
+  const [userProfile, setUserProfile] = useState({
+    firstName: "",
+    lastName: "",
+    registrationDate: ""
+  });
+
+  useEffect(() => {
+    // Load user profile from localStorage
+    const profile = localStorage.getItem('userProfile');
+    if (profile) {
+      const parsedProfile = JSON.parse(profile);
+      setUserProfile({
+        firstName: parsedProfile.firstName || "",
+        lastName: parsedProfile.lastName || "",
+        registrationDate: parsedProfile.registrationDate || ""
+      });
+    }
+  }, []);
+
+  const formatRegistrationDate = (dateString: string) => {
+    if (!dateString) return "Unknown";
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  };
+
+  const displayName = userProfile.firstName && userProfile.lastName 
+    ? `${userProfile.firstName} ${userProfile.lastName}`
+    : "User";
+
   return (
     <div style={{ paddingTop: '80px' }}>
     <div className="min-h-screen bg-sofa-beige/30">
@@ -300,8 +354,10 @@ const Profile: React.FC = () => {
                 <User size={40} className="text-sofa-purple" />
               </div>
               <div className="text-center md:text-left">
-                <h1 className="text-3xl font-bold mb-2">John Doe</h1>
-                <p className="text-gray-600">Member since April 2023</p>
+                <h1 className="text-3xl font-bold mb-2">{displayName}</h1>
+                <p className="text-gray-600">
+                  Member since {formatRegistrationDate(userProfile.registrationDate)}
+                </p>
                 <div className="mt-4 space-x-2">
                   <Button variant="outline" size="sm">Edit Profile Picture</Button>
                   <Button variant="outline" size="sm">View Public Profile</Button>
