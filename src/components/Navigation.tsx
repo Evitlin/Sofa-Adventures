@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Home, Map, User, Search, MapPin, Menu, X, LogIn, LogOut, ShoppingBag, UserPlus } from 'lucide-react';
+import { Home, Map, User, Search, MapPin, Menu, X, LogIn, LogOut, ShoppingBag, UserPlus, Shield } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -68,6 +68,17 @@ const Navigation: React.FC = () => {
 
   return (
     <>
+      {/* Admin Link - Top Right Corner */}
+      <div className="fixed top-4 right-4 z-[9999]">
+        <Link 
+          to="/admin" 
+          className="bg-gray-800 text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors flex items-center gap-2 shadow-lg"
+        >
+          <Shield size={16} />
+          <span>Admin</span>
+        </Link>
+      </div>
+
       <nav className="fixed top-0 left-0 w-full bg-white bg-opacity-100 shadow-sm z-50 py-0">
         <div className="container mx-auto px-4 flex justify-between items-center">
           {/* Logo */}
